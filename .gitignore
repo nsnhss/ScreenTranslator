@@ -1,0 +1,15 @@
+# 构建输出
+bin/
+obj/
+publish/
+
+# 用户配置（含 API 密钥，不要提交）
+config.txt
+
+# IDE
+.vs/
+.vscode/
+*.user
+
+# 系统文件
+Thumbs.db
