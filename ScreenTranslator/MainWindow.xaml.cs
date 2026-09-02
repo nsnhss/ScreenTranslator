@@ -7,7 +7,7 @@ using ScreenTranslator.Services;
 
 namespace ScreenTranslator;
 
-public partial class MainWindow : Window
+public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
 {
     private readonly HotkeyService _hotkey = new();
     private readonly CacheService _cache = new();
