@@ -81,7 +81,7 @@
                             <ComboBoxItem Content="韩文" Tag="ko"/>
                         </ComboBox>
                     </Grid>
-                    <CheckBox x:Name="AutoStartCheck"
+                    <ui:ToggleSwitch x:Name="AutoStartCheck"
                               Content="开机自动启动（启动后驻留右下角托盘）"
                               Click="OnAutoStartClick"/>
                 </StackPanel>

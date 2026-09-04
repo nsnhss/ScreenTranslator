@@ -34,13 +34,8 @@ public class TencentTranslateService : ITranslateEngine
     {
         var (result, source) = await TranslateInternalAsync(text, sourceLang, targetLang);
 
-        // 源语言 = 目标语言时 API 直接返回原文（例如框选了中文内容），
-        // 自动转为翻译成英文兼底
-        if (!string.IsNullOrEmpty(source) && source.StartsWith(targetLang))
-        {
-            string alt = targetLang == "zh" ? "en" : "zh";
-            (result, _) = await TranslateInternalAsync(text, sourceLang, alt);
-        }
+        // 源语言 = 目标语言时 API 原样返回原文，直接返回原文即可
+        //（由调用方根据 result == text 给出提示，不再自动转成英文）
         return result;
     }
 

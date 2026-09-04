@@ -37,6 +37,9 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         InitTray();
         InitConfigWatcher();   // config.txt 保存后自动重载，改快捷键不用重启
 
+        // 跟随系统明暗主题（官方推荐方式，在窗口加载后应用）
+        Loaded += (_, _) => Wpf.Ui.Appearance.SystemThemeWatcher.Watch(this);
+
         _hotkey.HotkeyPressed += async () => await RunTranslateFlowAsync();
         SourceInitialized += (_, _) => RegisterHotkey();
         Closed += (_, _) =>
@@ -136,13 +139,14 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         };
 
         var menu = new System.Windows.Forms.ContextMenuStrip();
-        menu.Items.Add("显示主窗口", null, (_, _) => ShowMainWindow());
+        menu.Items.Add("显示主窗口", null, (_, _) => ShowFromTray());
         menu.Items.Add("退出", null, (_, _) => ExitApp());
         _tray.ContextMenuStrip = menu;
-        _tray.DoubleClick += (_, _) => ShowMainWindow();
+        _tray.DoubleClick += (_, _) => ShowFromTray();
     }
 
-    private void ShowMainWindow()
+    /// <summary>从托盘/隐藏状态恢复显示主窗口（也供单实例信号调用）</summary>
+    public void ShowFromTray()
     {
         Show();
         WindowState = WindowState.Normal;
@@ -299,8 +303,11 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
                 UpdateStatus();
             }
 
-            // 7. 显示结果
-            new ResultWindow(text, result, fromCache, anchor).Show();
+            // 7. 显示结果（译文与原文相同 = 源语言已是目标语言，给出提示）
+            string display = result.Trim() == text
+                ? "✔ 原文已是目标语言，无需翻译"
+                : result;
+            new ResultWindow(text, display, fromCache, anchor).Show();
         }
         catch (Exception ex)
         {

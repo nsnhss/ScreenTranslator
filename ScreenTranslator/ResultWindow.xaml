@@ -1,6 +1,7 @@
 <Window x:Class="ScreenTranslator.ResultWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         Width="420" SizeToContent="Height" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent"
         Topmost="True" ShowInTaskbar="False"
@@ -17,10 +18,12 @@
                 <TextBlock x:Name="BadgeText" DockPanel.Dock="Left"
                            FontSize="11" Foreground="#FF2196F3" FontWeight="Bold"
                            VerticalAlignment="Center" />
-                <Button x:Name="CloseButton" DockPanel.Dock="Right" Content="✕"
-                        Width="24" Height="24" FontSize="12"
+                <Button x:Name="CloseButton" DockPanel.Dock="Right"
+                        Width="28" Height="28" Padding="0"
                         Background="Transparent" BorderThickness="0"
-                        Foreground="Gray" Cursor="Hand" Click="OnClose" />
+                        Cursor="Hand" Click="OnClose" ToolTip="关闭">
+                    <ui:SymbolIcon Symbol="Dismiss20" FontSize="14" Foreground="Gray"/>
+                </Button>
                 <TextBlock Text="翻译结果" FontWeight="Bold" FontSize="13"
                            VerticalAlignment="Center" />
             </DockPanel>
